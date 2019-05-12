@@ -29,11 +29,11 @@ scenario:
     - dependency
     - syntax
     - create
-    - prepare
+    # - prepare
     - converge
     - idempotence
     - check
-    - side_effect
+    # - side_effect
     - verify
     - destroy
 verifier:
