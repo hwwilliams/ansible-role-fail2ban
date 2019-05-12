@@ -24,10 +24,10 @@ provisioner:
 scenario:
   name: default
   test_sequence:
-    # - dependency
+    - dependency
     - syntax
     - create
-    # - prepare
+    - prepare
     - converge
     - idempotence
     - check
