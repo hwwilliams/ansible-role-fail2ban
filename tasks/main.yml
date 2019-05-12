@@ -1,0 +1,36 @@
+---
+- name: Ensure Epel Repo Is Present
+  include_role:
+    name: geerlingguy.repo-epel
+  when:
+    - fail2ban_install_epel
+    - ansible_os_family == 'RedHat'
+
+- name: Ensure Fail2Ban Is Present
+  become: true
+  package:
+    name:
+        - fail2ban
+        - fail2ban-firewalld
+        - fail2ban-sendmail
+        - fail2ban-systemd
+    state: present
+
+- name: Ensure Fail2Ban Is Running and Starts At Boot
+  become: true
+  systemd:
+    name: fail2ban
+    state: started
+    enabled: true
+
+- name: Include Fail2Ban Firewalld Related Tasks
+  include_tasks:
+    file: firewalld.yml
+
+- name: Ensure Fail2Ban Local Jail Configuration File Is Present
+  become: true
+  template:
+    src: templates/jail.local.j2
+    dest: /etc/fail2ban/jail.local
+    mode: 0644
+  notify: Restart Fail2Ban

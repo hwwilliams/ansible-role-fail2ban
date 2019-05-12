@@ -1,0 +1,4 @@
+---
+- name: Restart Fail2Ban
+  become: true
+  systemd: name=fail2ban state=restarted

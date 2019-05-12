@@ -1,0 +1,22 @@
+---
+# Attempt to install Epel repo
+# using Geerlingguy's role
+# Set to false if you don't want
+# to use it or already have it
+fail2ban_install_epel: true
+
+# Number of seconds to ban an IP
+fail2ban_ban_time: 3600
+
+# Fail2Ban sendmail settings
+fail2ban_sender: Fail2Ban
+fail2ban_destemail: root
+fail2ban_action: '%(action_mwl)s'
+
+# Enable if system is using firewalld
+# instead of iptables
+fail2ban_firewalld: false
+
+# SSH jail is enabled by default
+fail2ban_sshd: true
+

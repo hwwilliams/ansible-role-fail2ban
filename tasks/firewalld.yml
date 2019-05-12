@@ -1,0 +1,17 @@
+---
+- name: Remove Firewalld Jail Configuration File If Using Iptables
+  become: true
+  file:
+    path: /etc/fail2ban/jail.d/00-firewalld.conf
+    state: absent
+  notify: Restart Fail2Ban
+  when: not fail2ban_firewalld
+
+- name: Ensure Systemd Jail Configuration File Is Present
+  become: true
+  copy:
+    src: files/00-systemd.conf
+    dest: /etc/fail2ban/jail.d/00-systemd.conf
+    mode: 0644
+  notify: Restart Fail2Ban
+  when: fail2ban_firewalld
