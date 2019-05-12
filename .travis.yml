@@ -7,8 +7,6 @@ env:
     - ROLE_NAME: fail2ban
   matrix:
     - MOLECULE_DISTRO: centos7
-    - MOLECULE_DISTRO: fedora27
-
 install:
   - pip install molecule docker
 
