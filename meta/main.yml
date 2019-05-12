@@ -1,5 +1,6 @@
 ---
-dependencies: []
+dependencies:
+  - src: geerlingguy.repo-epel
 
 galaxy_info:
   role_name: fail2ban
