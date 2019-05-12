@@ -10,13 +10,12 @@ env:
     - MOLECULE_DISTRO: fedora27
 
 install:
-  - pip install molecule docker ansible
+  - pip install molecule docker
 
 before_script:
   - cd ../
   - mv ansible-role-$ROLE_NAME hwwilliams.$ROLE_NAME
   - cd hwwilliams.$ROLE_NAME
-  - ansible-galaxy install -r requirements.yml
 
 script:
   - molecule test
