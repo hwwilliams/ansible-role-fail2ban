@@ -1,6 +1,6 @@
 ---
 dependencies:
-  - src: geerlingguy.repo-epel
+  - { role: geerlingguy.repo-epel }
 
 galaxy_info:
   role_name: fail2ban
