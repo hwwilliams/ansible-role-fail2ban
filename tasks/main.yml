@@ -1,11 +1,4 @@
 ---
-- name: Ensure Epel Repo Is Present
-  include_role:
-    name: geerlingguy.repo-epel
-  when:
-    - fail2ban_install_epel
-    - ansible_os_family == 'RedHat'
-
 - name: Ensure Fail2Ban Is Present
   become: true
   package:

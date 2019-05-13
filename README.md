@@ -12,11 +12,7 @@ Also on [Ansible Galaxy](https://galaxy.ansible.com/hwwilliams/fail2ban).
 
 If running against a RedHat based system then you'll need to have the Epel repo installed.
 
-I've included a requirements file that will pull the Epel repo Ansible role designed by [Geerlingguy](https://github.com/geerlingguy/ansible-role-repo-epel).
-
-```bash
-ansible-galaxy install -r requirements.yml
-```
+I suggest running the Ansible role designed by [Geerlingguy](https://github.com/geerlingguy/ansible-role-repo-epel) before this role if you don't already have it installed.
 
 ## Role Variables
 
