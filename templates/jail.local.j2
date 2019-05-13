@@ -3,6 +3,7 @@ bantime = {{ fail2ban_ban_time }}
 sender = {{ fail2ban_sender }}
 destemail = {{ fail2ban_destemail }}
 action = {{ fail2ban_action }}
+ignoreip = 127.0.0.1/8{% for ip in fail2ban_ignoreip | default([]) %} {{ ip }}
 
 [sshd]
 enabled = {{ fail2ban_sshd }}

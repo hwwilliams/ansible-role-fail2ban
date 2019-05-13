@@ -7,6 +7,10 @@ fail2ban_sender: Fail2Ban
 fail2ban_destemail: root
 fail2ban_action: '%(action_mwl)s'
 
+# Add list of IP range to ignore bad auth
+# Example 192.168.1.0/24
+fail2ban_ignoreip: []
+
 # Enable if system is using firewalld
 # instead of iptables
 fail2ban_firewalld: false
