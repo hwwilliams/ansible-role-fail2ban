@@ -1,20 +1,118 @@
 ---
-# Number of seconds to ban an IP
-fail2ban_ban_time: 3600
-
-# Fail2Ban sendmail settings
-fail2ban_sender: Fail2Ban
-fail2ban_destemail: root
-fail2ban_action: '%(action_mwl)s'
-
-# Add list of IP range to ignore bad auth
-# Example 192.168.1.0/24
-fail2ban_ignoreip: []
-
-# Enable if system is using firewalld
-# instead of iptables
+# Set to true if using Firewalld on a RedHat based system
+# or false to remove the default fail2ban firewalld configuration
+# so that is falls back to using iptables.
+# Only applicable on RedHat based systems.
 fail2ban_firewalld: false
 
-# SSH jail is enabled by default
-fail2ban_sshd: true
+# Sender email address used solely for some actions.
+fail2ban_sender: Fail2Ban
 
+# Destination email address used solely for the interpolations in
+# jail.{conf,local,d/*} configuration files.
+fail2ban_destemail: root
+
+# Choose default action.  To change, just override value of 'action' with the
+# interpolation to the chosen action shortcut (e.g.  action_mw, action_mwl, etc)
+# in jail.local globally (section [DEFAULT]) or per specific section.
+fail2ban_global_action: '%(action_)s'
+
+# Default banning action (e.g. iptables, iptables-new,
+# iptables-multiport, shorewall, etc) It is used to define
+# action_* variables. Can be overridden globally or per
+# section within jail.local file.
+fail2ban_global_banaction: iptables-multiport
+fail2ban_global_banaction_allports: iptables-allports
+
+# E-mail action. Since 0.8.1 Fail2Ban uses sendmail MTA for the
+# mailing. Change mta configuration parameter to mail if you want to
+# revert to conventional 'mail'.
+fail2ban_mta: sendmail
+
+# Default protocol
+fail2ban_protocol: tcp
+
+# Specify chain where jumps would
+# need to be added in iptables.
+fail2ban_chain: INPUT
+
+# "ignoreip" can be an IP address, a CIDR mask or a DNS host. Fail2ban will not
+# ban a host which matches an address in this list. Several addresses can be
+# defined using space (and/or comma) separator.
+# 127.0.0.1/8 is included by default.
+fail2ban_ignoreip: []
+
+# "bantime" is the number of seconds that a host is banned.
+fail2ban_global_bantime: 600
+
+# A host is banned if it has generated "maxretry" during the last "findtime"
+# seconds.
+fail2ban_global_findtime: 600
+
+# "maxretry" is the number of failures before a host get banned.
+fail2ban_global_maxretry: 5
+
+# "backend" specifies the backend used to get files modification.
+# Available options are "pyinotify", "gamin", "polling", "systemd" and "auto".
+# This option can be overridden in each jail as well.
+#
+# pyinotify: Requires pyinotify (a file alteration monitor) to be installed.
+#               If pyinotify is not installed, Fail2ban will use auto.
+# gamin:    Requires Gamin (a file alteration monitor) to be installed.
+#               If Gamin is not installed, Fail2ban will use auto.
+# polling:   uses a polling algorithm which does not require external libraries.
+# systemd: uses systemd python library to access the systemd journal.
+#              Specifying "logpath" is not valid for this backend.
+#              See "journalmatch" in the jails associated filter config
+# auto:     Will try to use the following backends, in order:
+#              pyinotify, gamin, polling.
+#
+# Note: if systemd backend is chosen as the default but you enable a jail
+#       for which logs are present only in its own log files, specify some other
+#       backend for that jail (e.g. polling) and provide empty value for
+#       journalmatch.
+#       See https://github.com/fail2ban/fail2ban/issues/959#issuecomment-74901200
+fail2ban_global_backend: auto
+
+# "usedns" specifies if jails should trust hostnames in logs,
+#   warn when DNS lookups are performed, or ignore all hostnames in logs
+#
+# yes:    If a hostname is encountered, a DNS lookup will be performed.
+# warn:  If a hostname is encountered, a DNS lookup will be performed,
+#           but it will be logged as a warning.
+# no:     If a hostname is encountered, will not be used for banning,
+#          but it will be logged as info.
+# raw:   Use raw value (no hostname), allow use it for no-host filters/actions (example user)
+fail2ban_usedns: warn
+
+# "logencoding" specifies the encoding of the log files handled by the jail
+#   This is used to decode the lines from the log file.
+#   Typical examples:  "ascii", "utf-8"
+#
+#   auto:   will use the system locale setting
+fail2ban_global_logencoding: auto
+
+## Jail settings
+# Options not included in list are omitted from the template.
+# Possible options are as follows:
+# - Name
+#   enabled
+#   port
+#   knocking_url
+#   filter
+#   action
+#   banaction
+#   logpath
+#   blocktype
+#   returntype
+#   backend
+#   bantime
+#   findtime
+#   maxretry
+#   ignorecommand
+#   logencoding
+fail2ban_jails:
+  - name: sshd
+    enabled: true
+    bantime: 3600
+    maxretry: 3

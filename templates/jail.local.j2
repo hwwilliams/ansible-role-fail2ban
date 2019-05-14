@@ -1,9 +1,41 @@
+{{ ansible_managed }}
+
 [DEFAULT]
-bantime = {{ fail2ban_ban_time }}
 sender = {{ fail2ban_sender }}
 destemail = {{ fail2ban_destemail }}
-action = {{ fail2ban_action }}
-ignoreip = 127.0.0.1/8{% for ip in fail2ban_ignoreip | default([]) %} {{ ip }}{% endfor %}
+mta = {{ fail2ban_mta }}
+protocol = {{ fail2ban_protocol }}
 
-[sshd]
-enabled = {{ fail2ban_sshd }}
+action = {{ fail2ban_global_action }}
+banaction = {{ fail2ban_global_banaction }}
+banaction_allports = {{ fail2ban_global_banaction_allports }}
+
+chain = {{ fail2ban_chain }}
+ignoreip = 127.0.0.1/8{% for ip in fail2ban_ignoreip | default([]) %} {{ ip }}{% endfor %}
+bantime = {{ fail2ban_global_bantime }}
+findtime = {{ fail2ban_global_findtime }}
+maxretry = {{ fail2ban_global_maxretry }}
+
+backend = {{ fail2ban_global_backend }}
+usedns = {{ fail2ban_usedns }}
+logencoding = {{ fail2ban_global_logencoding }}
+
+# Fail2Ban Jails
+{% for jail in fail2ban_jails %}
+[{{ jail.name }}]
+enabled = {{ jail.enabled | default([]) }}
+port = {{ jail.port | default([]) }}
+knocking_url = {{ jail.knocking_url | default([]) }}
+filter = {{ jail.filter | default([]) }}
+action = {{ jail.action | default([]) }}
+banaction = {{ jail.banaction | default([]) }}
+logpath = {{ jail.logpath | default([]) }}
+blocktype = {{ jail.blocktype | default([]) }}
+returntype = {{ jail.returntype | default([]) }}
+backend = {{ jail.backend | default([]) }}
+bantime = {{ jail.bantime | default([]) }}
+findtime = {{ jail.findtime | default([]) }}
+maxretry = {{ jail.maxretry | default([]) }}
+ignorecommand = {{ jail.ignorecommand | default([]) }}
+logencoding = {{ jail.logencoding | default([]) }}
+{% endfor %}
