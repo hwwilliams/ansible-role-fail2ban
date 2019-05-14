@@ -20,7 +20,7 @@ logencoding = {{ fail2ban_global_logencoding }}
 {% for jail in fail2ban_jails %}
 [{{ jail.name }}]
 {% if jail.enabled is defined %}enabled = {{ jail.enabled }}{% endif %}
-{% if jail.port is defined %}port = {{ jail.port }}{% endif %}}
+{% if jail.port is defined %}port = {{ jail.port }}{% endif %}
 {% if jail.knocking_url is defined %}knocking_url = {{ jail.knocking_url }}{% endif %}
 {% if jail.filter is defined %}filter = {{ jail.filter }}{% endif %}
 {% if jail.action is defined %}action = {{ jail.action }}{% endif %}
