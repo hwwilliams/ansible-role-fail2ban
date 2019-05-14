@@ -9,7 +9,7 @@
 
 - name: Ensure Fail2Ban Firewalld Related Packages Are Present
   become: true
-  package:
+  yum:
     name:
         - fail2ban-firewalld
         - fail2ban-systemd

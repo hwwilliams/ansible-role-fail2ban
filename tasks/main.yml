@@ -1,15 +1,30 @@
 ---
-- name: Ensure Fail2Ban Is Present
+- name: Ensure Fail2Ban and Sendmail Are Present
   become: true
   package:
     name:
         - fail2ban
-        - fail2ban-sendmail
+        - sendmail
     state: present
+
+- name: Ensure Fail2Ban Sendmail Actions Is Present
+  become: true
+  yum:
+    name: fail2ban-sendmail
+    state: present
+  when: ansible_os_family == 'RedHat'
 
 - name: Include Fail2Ban Firewalld Related Tasks
   include_tasks:
     file: firewalld.yml
+  when: ansible_os_family == 'RedHat'
+
+- name: Ensure Sendmail Is Running and Starts At Boot
+  become: true
+  systemd:
+    name: sendmail
+    state: started
+    enabled: true
 
 - name: Ensure Fail2Ban Is Running and Starts At Boot
   become: true
