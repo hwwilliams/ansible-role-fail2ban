@@ -4,10 +4,12 @@
   package:
     name:
         - fail2ban
-        - fail2ban-firewalld
         - fail2ban-sendmail
-        - fail2ban-systemd
     state: present
+
+- name: Include Fail2Ban Firewalld Related Tasks
+  include_tasks:
+    file: firewalld.yml
 
 - name: Ensure Fail2Ban Is Running and Starts At Boot
   become: true
@@ -15,10 +17,6 @@
     name: fail2ban
     state: started
     enabled: true
-
-- name: Include Fail2Ban Firewalld Related Tasks
-  include_tasks:
-    file: firewalld.yml
 
 - name: Ensure Fail2Ban Local Jail Configuration File Is Present
   become: true

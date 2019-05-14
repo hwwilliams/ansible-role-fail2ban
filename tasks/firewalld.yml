@@ -7,6 +7,16 @@
   notify: Restart Fail2Ban
   when: not fail2ban_firewalld
 
+- name: Ensure Fail2Ban Firewalld Related Packages Are Present
+  become: true
+  package:
+    name:
+        - fail2ban-firewalld
+        - fail2ban-systemd
+    state: present
+  notify: Restart Fail2Ban
+  when: fail2ban_firewalld
+
 - name: Ensure Systemd Jail Configuration File Is Present
   become: true
   copy:
