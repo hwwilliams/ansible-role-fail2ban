@@ -17,7 +17,7 @@ usedns = {{ fail2ban_usedns }}
 logencoding = {{ fail2ban_global_logencoding }}
 
 # Fail2Ban Jails
-{% for jail in fail2ban_jails %}
+{% for jail in fail2ban_jails -%}
 [{{ jail.name }}]
 {% if jail.enabled is defined %}enabled = {{ jail.enabled }}{% endif %}
 {% if jail.port is defined %}port = {{ jail.port }}{% endif %}
@@ -34,4 +34,4 @@ logencoding = {{ fail2ban_global_logencoding }}
 {% if jail.maxretry is defined %}maxretry = {{ jail.maxretry }}{% endif %}
 {% if jail.ignorecommand is defined %}ignorecommand = {{ jail.ignorecommand }}{% endif %}
 {% if jail.logencoding is defined %}logencoding = {{ jail.logencoding }}{% endif %}
-{% endfor %}
+{%- endfor %}
