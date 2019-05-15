@@ -1,41 +1,37 @@
-{{ ansible_managed }}
-
+## {{ ansible_managed }}
 [DEFAULT]
 sender = {{ fail2ban_sender }}
 destemail = {{ fail2ban_destemail }}
 mta = {{ fail2ban_mta }}
 protocol = {{ fail2ban_protocol }}
-
 action = {{ fail2ban_global_action }}
 banaction = {{ fail2ban_global_banaction }}
 banaction_allports = {{ fail2ban_global_banaction_allports }}
-
 chain = {{ fail2ban_chain }}
 ignoreip = 127.0.0.1/8{% for ip in fail2ban_ignoreip | default([]) %} {{ ip }}{% endfor %}
 bantime = {{ fail2ban_global_bantime }}
 findtime = {{ fail2ban_global_findtime }}
 maxretry = {{ fail2ban_global_maxretry }}
-
 backend = {{ fail2ban_global_backend }}
 usedns = {{ fail2ban_usedns }}
 logencoding = {{ fail2ban_global_logencoding }}
 
 # Fail2Ban Jails
-{% for jail in fail2ban_jails %}
+{% for jail in fail2ban_jails -%}
 [{{ jail.name }}]
-enabled = {{ jail.enabled | default([]) }}
-port = {{ jail.port | default([]) }}
-knocking_url = {{ jail.knocking_url | default([]) }}
-filter = {{ jail.filter | default([]) }}
-action = {{ jail.action | default([]) }}
-banaction = {{ jail.banaction | default([]) }}
-logpath = {{ jail.logpath | default([]) }}
-blocktype = {{ jail.blocktype | default([]) }}
-returntype = {{ jail.returntype | default([]) }}
-backend = {{ jail.backend | default([]) }}
-bantime = {{ jail.bantime | default([]) }}
-findtime = {{ jail.findtime | default([]) }}
-maxretry = {{ jail.maxretry | default([]) }}
-ignorecommand = {{ jail.ignorecommand | default([]) }}
-logencoding = {{ jail.logencoding | default([]) }}
-{% endfor %}
+{% if jail.enabled is defined %}enabled = {{ jail.enabled }}{% endif %}
+{% if jail.port is defined %}port = {{ jail.port }}{% endif %}
+{% if jail.knocking_url is defined %}knocking_url = {{ jail.knocking_url }}{% endif %}
+{% if jail.filter is defined %}filter = {{ jail.filter }}{% endif %}
+{% if jail.action is defined %}action = {{ jail.action }}{% endif %}
+{% if jail.banaction is defined %}banaction = {{ jail.banaction }}{% endif %}
+{% if jail.logpath is defined %}logpath = {{ jail.logpath }}{% endif %}
+{% if jail.blocktype is defined %}blocktype = {{ jail.blocktype }}{% endif %}
+{% if jail.returntype is defined %}returntype = {{ jail.returntype }}{% endif %}
+{% if jail.backend is defined %}backend = {{ jail.backend }}{% endif %}
+{% if jail.bantime is defined %}bantime = {{ jail.bantime }}{% endif %}
+{% if jail.findtime is defined %}findtime = {{ jail.findtime }}{% endif %}
+{% if jail.maxretry is defined %}maxretry = {{ jail.maxretry }}{% endif %}
+{% if jail.ignorecommand is defined %}ignorecommand = {{ jail.ignorecommand }}{% endif %}
+{% if jail.logencoding is defined %}logencoding = {{ jail.logencoding }}{% endif %}
+{%- endfor %}

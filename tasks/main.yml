@@ -21,14 +21,14 @@
 
 - name: Ensure Sendmail Is Running and Starts At Boot
   become: true
-  systemd:
+  service:
     name: sendmail
     state: started
     enabled: true
 
 - name: Ensure Fail2Ban Is Running and Starts At Boot
   become: true
-  systemd:
+  service:
     name: fail2ban
     state: started
     enabled: true
