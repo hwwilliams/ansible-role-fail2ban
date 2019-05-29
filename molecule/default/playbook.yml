@@ -1,6 +1,7 @@
 ---
 - name: Converge
   hosts: all
+  become: true
   pre_tasks:
     - name: Update Apt Cache
       apt: update_cache=yes cache_valid_time=360
