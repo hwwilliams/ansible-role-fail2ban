@@ -5,7 +5,7 @@
     path: /etc/fail2ban/jail.d/00-firewalld.conf
     state: absent
   notify: Restart Fail2Ban
-  when: not fail2ban_firewalld
+  when: not fail2ban_firewalld | bool
 
 - name: Ensure Fail2Ban Firewalld Related Packages Are Present
   become: true
@@ -15,7 +15,7 @@
         - fail2ban-systemd
     state: present
   notify: Restart Fail2Ban
-  when: fail2ban_firewalld
+  when: fail2ban_firewalld | bool
 
 - name: Ensure Systemd Jail Configuration File Is Present
   become: true
@@ -24,4 +24,4 @@
     dest: /etc/fail2ban/jail.d/00-systemd.conf
     mode: 0644
   notify: Restart Fail2Ban
-  when: fail2ban_firewalld
+  when: fail2ban_firewalld | bool
