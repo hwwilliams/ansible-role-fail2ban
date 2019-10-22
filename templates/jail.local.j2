@@ -32,6 +32,7 @@ logencoding = {{ fail2ban_global_logencoding }}
 {% if jail.backend is defined %}backend = {{ jail.backend~"\n" }}{% endif %}
 {% if jail.bantime is defined %}bantime = {{ jail.bantime~"\n" }}{% endif %}
 {% if jail.findtime is defined %}findtime = {{ jail.findtime~"\n" }}{% endif %}
+{% if jail.mode is defined %}mode = {{ jail.mode~"\n" }}{% endif %}
 {% if jail.maxretry is defined %}maxretry = {{ jail.maxretry~"\n" }}{% endif %}
 {% if jail.ignorecommand is defined %}ignorecommand = {{ jail.ignorecommand~"\n" }}{% endif %}
 {% if jail.logencoding is defined %}logencoding = {{ jail.logencoding~"\n" }}{% endif %}
